@@ -7,7 +7,7 @@ public class Tekst extends Innlegg {
 
 	// TODO: objektvariable
 
-	String tekst;
+	private String tekst;
 	
 	public Tekst () {
 		
