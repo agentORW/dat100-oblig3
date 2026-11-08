@@ -39,6 +39,9 @@ public class Blogg {
 	}
 
 	public boolean finnes(Innlegg innlegg) {
+		if (this.nesteledig == 0) {
+			return true;
+		}
 		for (Innlegg min_inlegg : this.inleggtabell) {
 			if (min_inlegg.erLik(innlegg)) {
 				return true;
