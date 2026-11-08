@@ -2,6 +2,7 @@ package no.hvl.dat100.oppgave3;
 
 import no.hvl.dat100.common.TODO;
 import no.hvl.dat100.oppgave1.*;
+import no.hvl.dat100.oppgave2.Tekst;
 
 public class Blogg {
 
@@ -61,29 +62,70 @@ public class Blogg {
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		String result = "";
+		result += this.nesteledig + "\n";
+		for (Innlegg innlegg : this.inleggtabell) {
+			result += innlegg.toString();
+		}
+
+		return result;
 	}
 
 	// valgfrie oppgaver nedenfor
 	
 	public void utvid() {
-		throw new UnsupportedOperationException(TODO.method());
+		Innlegg[] nyListe = new Innlegg[this.inleggtabell.length*2];
+		for (int i = 0; i < this.inleggtabell.length; i++) {
+			nyListe[i] = this.inleggtabell[i];
+		}
+
+		this.inleggtabell = nyListe;
 	}
 	
 	public boolean leggTilUtvid(Innlegg innlegg) {
+		if (!ledigPlass()) {
+			utvid();
+		}
+		if (!finnes(innlegg)) {
+			leggTil(innlegg);
+		}
 
-		throw new UnsupportedOperationException(TODO.method());
-		
+		return true;
 	}
 	
 	public boolean slett(Innlegg innlegg) {
-		
-		throw new UnsupportedOperationException(TODO.method());
+
+		int i = 0;
+		for (; i < this.inleggtabell.length; i++) {
+			if (innlegg.erLik(this.inleggtabell[i])) {
+				this.inleggtabell[i] = null;
+				break;
+			}
+		}
+
+		// Vi har lyst til å skifte alle elementene i resten av listen en til venstre
+		for (; i < this.inleggtabell.length; i++) {
+			this.inleggtabell[i] = this.inleggtabell[i+1];
+		}
+
+		this.nesteledig--;
+
+		return true;
 	}
 	
 	public int[] search(String keyword) {
-		
-		throw new UnsupportedOperationException(TODO.method());
 
+		int[] result = new int[this.nesteledig];
+		int i = 0;
+		for (Innlegg innlegg : this.inleggtabell) {
+			if (innlegg.getBruker().contains(keyword)) {
+				result[i] = innlegg.getId();
+			}
+			else if (innlegg instanceof Tekst && ((Tekst) innlegg).getTekst().contains(keyword)) {
+				result[i] = innlegg.getId();
+			}
+		}
+
+		return result;
 	}
 }
