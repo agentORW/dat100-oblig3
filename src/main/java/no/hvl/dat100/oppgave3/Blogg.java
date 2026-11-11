@@ -111,7 +111,7 @@ public class Blogg {
 		}
 
 		// Vi har lyst til å skifte alle elementene i resten av listen en til venstre
-		for (; i < this.inleggtabell.length; i++) {
+		for (; i < this.inleggtabell.length-1; i++) {
 			this.inleggtabell[i] = this.inleggtabell[i+1];
 		}
 
