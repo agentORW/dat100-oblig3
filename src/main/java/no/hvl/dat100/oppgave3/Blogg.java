@@ -29,9 +29,12 @@ public class Blogg {
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
-		for (Innlegg min_inlegg : this.inleggtabell) {
-			if (min_inlegg.erLik(innlegg)) {
-				return min_inlegg.getId();
+		if (!finnes(innlegg)) {
+			return -1;
+		}
+		for (int i = 0; i < this.inleggtabell.length; i++) {
+			if (this.inleggtabell[i] != null && this.inleggtabell[i].erLik(innlegg)) {
+				return i;
 			}
 		}
 
@@ -40,10 +43,10 @@ public class Blogg {
 
 	public boolean finnes(Innlegg innlegg) {
 		if (this.nesteledig == 0) {
-			return true;
+			return false;
 		}
 		for (Innlegg min_inlegg : this.inleggtabell) {
-			if (min_inlegg.erLik(innlegg)) {
+			if (min_inlegg != null && min_inlegg.erLik(innlegg)) {
 				return true;
 			}
 		}
@@ -58,6 +61,7 @@ public class Blogg {
 	public boolean leggTil(Innlegg innlegg) {
 		if (!finnes(innlegg)) {
 			this.inleggtabell[this.nesteledig] = innlegg;
+			this.nesteledig++;
 			return true;
 		} else {
 			return false;
